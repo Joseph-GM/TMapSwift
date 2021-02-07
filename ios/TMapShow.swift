@@ -42,7 +42,7 @@ class TMapShow: UIView, TMapViewDelegate {
    
     var mapView: TMapView?
     let mPosition: CLLocationCoordinate2D = CLLocationCoordinate2D.init(latitude: 37.570841, longitude: 126.985302)
-    let apiKey:String = "l7xxb0267913faf84de39d5c80d951a60836"
+    let apiKey:String = "API_KEY"
     
     override init(frame: CGRect) {
         
