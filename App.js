@@ -30,7 +30,7 @@ const TMapShow = requireNativeComponent("TMapShow")
 
 export default class App extends Component {
   state = {
-    count: 1
+    count: 1,
   };
   increment = () => {
     this.setState({ count: this.state.count + 1 })
@@ -39,7 +39,9 @@ export default class App extends Component {
     return (
       <View style={styles.container}>
         
-        <TMapShow style={ styles.wrapper }/>
+        <TMapShow 
+          style={ styles.wrapper }
+        />
         <TouchableOpacity
           style={[styles.wrapper, styles.border]}
           onPress={this.increment}
