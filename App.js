@@ -31,7 +31,9 @@ const TMapShow = requireNativeComponent("TMapShow")
 export default class App extends Component {
   state = {
     count: 1,
-  };
+    czoom: 5,
+    mapCenter : [36.122, 126.111]
+    };
   increment = () => {
     this.setState({ count: this.state.count + 1 })
   }
@@ -41,9 +43,10 @@ export default class App extends Component {
         
         <TMapShow 
           style={ styles.wrapper }
+          czoom = {17}
         />
         <TouchableOpacity
-          style={[styles.wrapper, styles.border]}
+          style={[styles.border]}
           onPress={this.increment}
         >
           <Text style={styles.button}>
@@ -62,7 +65,12 @@ const styles = StyleSheet.create({
     flex: 1, alignItems: "center", justifyContent: "center"
   },
   border: {
-    borderColor: "#eee", borderBottomWidth: 1
+    borderColor: "#eee", 
+    borderBottomWidth: 1, 
+    flex:1,
+    alignItems: "center",
+    justifyContent: "center"
+
   },
   button: {
     fontSize: 50, color: "orange"

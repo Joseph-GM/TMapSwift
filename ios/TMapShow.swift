@@ -39,28 +39,40 @@ import TMapSDK
 } */
 
 class TMapShow: UIView, TMapViewDelegate {
-   
+
+  
+  @objc var czoom: NSNumber=10 {
+    didSet {
+      zoom = Int(truncating: czoom)
+    }
+  }
+  
+  var zoom: Int = 1 {
+    didSet {
+      self.mapView?.setZoom(zoom)
+    }
+  }
+  
+  
     var mapView: TMapView?
     var marker: TMapMarker?
     var markers: [TMapMarker] = []
-  let mPosition: CLLocationCoordinate2D = CLLocationCoordinate2D.init(latitude: 37.5111168, longitude: 126.7107574)
-    let zoom = 16
-    let apiKey:String = "API_KEY"
-    
+    let mPosition: CLLocationCoordinate2D = CLLocationCoordinate2D.init(latitude: 37.5147585, longitude:126.7044424)
+//    let zoom = 16
+    let apiKey:String = "l7xxb0267913faf84de39d5c80d951a60836"
     
     override init(frame: CGRect) {
-        
         super.init(frame: frame)
         self.backgroundColor = .white
-        setupView()
 //        setupConstraints()
+        setupView()
     }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemente")
     }
-    
-    func SKTMapApikeySucceed() {
+  
+    @objc func SKTMapApikeySucceed() {
         self.mapView?.setCenter(mPosition)
         self.mapView?.setZoom(zoom)
         
@@ -81,7 +93,7 @@ class TMapShow: UIView, TMapViewDelegate {
         
         
         let pathData = TMapPathData()
-        pathData.requestFindNameAroundPOI(mPosition, categoryName:"EV충전소", radius: 100, count: 20) { (result, error)->Void in
+        pathData.requestFindNameAroundPOI(mPosition, categoryName:"EV충전소", radius: 100, count: 50) { (result, error)->Void in
                     if let result = result {
                         DispatchQueue.main.async {
                             for poi in result {
@@ -96,23 +108,22 @@ class TMapShow: UIView, TMapViewDelegate {
         }
     }
     
-    func setupView() {
+
+  @objc func setupView() {
         contentView.subviews.forEach { $0.removeFromSuperview() }
         self.mapView = TMapView (frame: contentView.frame)
+        self.mapView?.setCenter(mPosition)
+        self.mapView?.setZoom(zoom)
         self.mapView?.delegate = self
         self.mapView?.setApiKey(apiKey)
-        
-        
+                
         contentView.addSubview(self.mapView!)
-        
-        
-        
         
         self.addSubview(contentView)
     }
     
     
-    func setupConstraints() {
+    @objc func setupConstraints() {
         self.translatesAutoresizingMaskIntoConstraints = false
         contentView.translatesAutoresizingMaskIntoConstraints = false
         contentView.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 10).isActive = true
@@ -122,9 +133,16 @@ class TMapShow: UIView, TMapViewDelegate {
     }
     
     let contentView: UIView = {
-        let view = UIView(frame: CGRect(x: 0, y: 0, width: 500, height: 500))
+
+        let bounds = UIScreen.main.bounds
+        let width = bounds.size.width
+        let height = bounds.size.height
+      
+      let view = UIView(frame: CGRect(x: 0, y: 0, width: width, height: height))
         view.layer.borderWidth = 1.0
         view.layer.borderColor = UIColor.lightGray.cgColor
+      
+      
         return view
     }()
 }
