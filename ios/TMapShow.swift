@@ -41,7 +41,7 @@ import TMapSDK
 class TMapShow: UIView, TMapViewDelegate {
 
   
-  @objc var czoom: NSNumber=10 {
+/*  @objc var czoom: NSNumber=10 {
     didSet {
       zoom = Int(truncating: czoom)
     }
@@ -51,7 +51,9 @@ class TMapShow: UIView, TMapViewDelegate {
     didSet {
       self.mapView?.setZoom(zoom)
     }
-  }
+  } */
+  
+  @objc var zoom: NSNumber = 15
   
   
     var mapView: TMapView?
@@ -59,7 +61,7 @@ class TMapShow: UIView, TMapViewDelegate {
     var markers: [TMapMarker] = []
     let mPosition: CLLocationCoordinate2D = CLLocationCoordinate2D.init(latitude: 37.5147585, longitude:126.7044424)
 //    let zoom = 16
-    let apiKey:String = "l7xxb0267913faf84de39d5c80d951a60836"
+    let apiKey:String = "API_Key"
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -74,7 +76,7 @@ class TMapShow: UIView, TMapViewDelegate {
   
     @objc func SKTMapApikeySucceed() {
         self.mapView?.setCenter(mPosition)
-        self.mapView?.setZoom(zoom)
+        self.mapView?.setZoom(Int(zoom))
         
         
         let marker = TMapMarker(position: mPosition)
@@ -113,7 +115,7 @@ class TMapShow: UIView, TMapViewDelegate {
         contentView.subviews.forEach { $0.removeFromSuperview() }
         self.mapView = TMapView (frame: contentView.frame)
         self.mapView?.setCenter(mPosition)
-        self.mapView?.setZoom(zoom)
+        self.mapView?.setZoom(Int(zoom))
         self.mapView?.delegate = self
         self.mapView?.setApiKey(apiKey)
                 

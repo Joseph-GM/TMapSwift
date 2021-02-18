@@ -31,7 +31,7 @@ const TMapShow = requireNativeComponent("TMapShow")
 export default class App extends Component {
   state = {
     count: 1,
-    czoom: 5,
+    zoom: 5,
     mapCenter : [36.122, 126.111]
     };
   increment = () => {
@@ -43,7 +43,7 @@ export default class App extends Component {
         
         <TMapShow 
           style={ styles.wrapper }
-          czoom = {17}
+          zoom = {17}
         />
         <TouchableOpacity
           style={[styles.border]}
