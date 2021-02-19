@@ -8,36 +8,6 @@
 import UIKit
 import TMapSDK
 
-/* class TMapShow: UIView {
-  @objc var count = 0 {
-    didSet {
-      button.setTitle(String(describing: count), for: .normal)
-    }
-  }
-  override init(frame: CGRect) {
-    super.init(frame: frame)
-    self.addSubview(button)
-    increment()
-  }
-  required init?(coder aDecoder: NSCoder) {
-    fatalError("init(coder:) has not been implemented")
-  }
-  lazy var button: UIButton = {
-    let b = UIButton.init(type: UIButton.ButtonType.system)
-    b.titleLabel?.font = UIFont.systemFont(ofSize: 50)
-    b.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-    b.addTarget(
-      self,
-      action: #selector(increment),
-      for: .touchUpInside
-    )
-    return b
-  }()
-  @objc func increment() {
-    count += 1
-  }
-} */
-
 class TMapShow: UIView, TMapViewDelegate {
 
   
@@ -53,16 +23,32 @@ class TMapShow: UIView, TMapViewDelegate {
     }
   } */
   
-  @objc var zoom: NSNumber = 15
+  @objc var zoom: NSNumber = 10
   
   
     var mapView: TMapView?
     var marker: TMapMarker?
     var markers: [TMapMarker] = []
-    let mPosition: CLLocationCoordinate2D = CLLocationCoordinate2D.init(latitude: 37.5147585, longitude:126.7044424)
+/*    var mPosition: CLLocationCoordinate2D = CLLocationCoordinate2D.init(latitude: 37.5147585, longitude:126.7044424) */
+  
 //    let zoom = 16
-    let apiKey:String = "API_Key"
-    
+    let apiKey:String = "API_KEY"
+
+  @objc var clatitude: NSNumber = 36.121212
+  @objc var clongitude: NSNumber = 126.1212121
+  
+  var mPosition: CLLocationCoordinate2D {
+    get {
+      return CLLocationCoordinate2DMake(Double(self.clatitude), Double(self.clongitude))
+    }
+  }
+/* lazy var mPosition: CLLocationCoordinate2D = {
+  return CLLocationCoordinate2DMake(Double(self.clatitude), Double(self.clongitude))
+  }()
+*/
+  
+  
+  
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.backgroundColor = .white
@@ -94,8 +80,8 @@ class TMapShow: UIView, TMapViewDelegate {
         self.markers.append(marker)
         
         
-        let pathData = TMapPathData()
-        pathData.requestFindNameAroundPOI(mPosition, categoryName:"EV충전소", radius: 100, count: 50) { (result, error)->Void in
+       let pathData = TMapPathData()
+        pathData.requestFindNameAroundPOI(mPosition, categoryName:"EV충전소", radius: 100, count: 10) { (result, error)->Void in
                     if let result = result {
                         DispatchQueue.main.async {
                             for poi in result {
@@ -108,6 +94,7 @@ class TMapShow: UIView, TMapViewDelegate {
                         }
                     }
         }
+
     }
     
 
@@ -137,8 +124,8 @@ class TMapShow: UIView, TMapViewDelegate {
     let contentView: UIView = {
 
         let bounds = UIScreen.main.bounds
-        let width = bounds.size.width
-        let height = bounds.size.height
+        let width = bounds.width
+      let height = bounds.height*0.85
       
       let view = UIView(frame: CGRect(x: 0, y: 0, width: width, height: height))
         view.layer.borderWidth = 1.0

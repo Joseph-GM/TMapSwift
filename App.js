@@ -32,7 +32,8 @@ export default class App extends Component {
   state = {
     count: 1,
     zoom: 5,
-    mapCenter : [36.122, 126.111]
+    clatitude : 37.55555,
+    clongitude : 126.11111,
     };
   increment = () => {
     this.setState({ count: this.state.count + 1 })
@@ -43,14 +44,19 @@ export default class App extends Component {
         
         <TMapShow 
           style={ styles.wrapper }
-          zoom = {17}
+          zoom = {10}
+          clatitude = {37.5106732}
+          clongitude = {126.7105677}
         />
         <TouchableOpacity
           style={[styles.border]}
           onPress={this.increment}
         >
           <Text style={styles.button}>
-            {this.state.count}
+            Region : to be got
+          </Text>
+          <Text style={styles.button}>
+            City : to be got
           </Text>
         </TouchableOpacity>
       </View>
@@ -62,7 +68,7 @@ const styles = StyleSheet.create({
     flex: 1, alignItems: "stretch"
   },
   wrapper: {
-    flex: 1, alignItems: "center", justifyContent: "center"
+    flex: 5, alignItems: "center", justifyContent: "center"
   },
   border: {
     borderColor: "#eee", 
@@ -73,6 +79,6 @@ const styles = StyleSheet.create({
 
   },
   button: {
-    fontSize: 50, color: "orange"
+    fontSize: 15, color: "black"
   }
 });
