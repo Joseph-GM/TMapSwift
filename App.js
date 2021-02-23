@@ -26,27 +26,60 @@ import {
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
 
+import Geolocation from '@react-native-community/geolocation';
+const SK_API_KEY = 'SKAPI'
+
 const TMapShow = requireNativeComponent("TMapShow")
 
 export default class App extends Component {
   state = {
-    count: 1,
     zoom: 5,
-    clatitude : 37.55555,
-    clongitude : 126.11111,
+    lat : 37.55555,
+    lon : 126.11111,
+    breweryList: null,
+    addressData : null,
+    isLoading : true,
     };
-  increment = () => {
-    this.setState({ count: this.state.count + 1 })
+  
+  componentDidMount() {
+    Geolocation.getCurrentPosition(
+      position => {
+        this.setState(
+          {
+            lat : position.coords.latitude,
+            lon : position.coords.longitude,
+          }
+        );
+        Promise.all([
+          fetch(`https://apis.openapi.sk.com/tmap/pois?version=1&count=2&searchKeyword=전기차충전소&centerLon=${position.coords.longitude}&centerLat=${position.coords.latitude}&appKey=${SK_API_KEY}`),
+          fetch(`https://apis.openapi.sk.com/tmap/geo/reversegeocoding?version=1&lat=${position.coords.latitude}&lon=${position.coords.longitude}&appKey=${SK_API_KEY}`)
+         ])
+        .then(([res1, res2]) => Promise.all([res1.json(), res2.json()]))
+        .then(([data1, data2]) => {this.setState({
+          breweryList : data1.searchPoiInfo.pois.poi,
+          addressData : data2,
+          isLoading: false,
+        });
+        console.log(this.state.breweryList);
+      })
+      },
+      error => {
+        console.log('error')
+      }
+    )
   }
+  
   render() {
+    const lat = this.state.lat
+    const lon = this.state.lon
     return (
       <View style={styles.container}>
         
         <TMapShow 
           style={ styles.wrapper }
           zoom = {10}
-          clatitude = {37.5106732}
-          clongitude = {126.7105677}
+          clatitude = {lat}
+          clongitude = {lon}
         />
         <TouchableOpacity
           style={[styles.border]}

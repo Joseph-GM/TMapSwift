@@ -32,7 +32,7 @@ class TMapShow: UIView, TMapViewDelegate {
 /*    var mPosition: CLLocationCoordinate2D = CLLocationCoordinate2D.init(latitude: 37.5147585, longitude:126.7044424) */
   
 //    let zoom = 16
-    let apiKey:String = "API_KEY"
+    let apiKey:String = "l7xxb0267913faf84de39d5c80d951a60836"
 
   @objc var clatitude: NSNumber = 36.121212
   @objc var clongitude: NSNumber = 126.1212121
@@ -66,8 +66,8 @@ class TMapShow: UIView, TMapViewDelegate {
         
         
         let marker = TMapMarker(position: mPosition)
-        marker.title = "제목없음"
-        marker.subTitle = "내용없음"
+        marker.title = "현재위치"
+        marker.subTitle = "내차위치"
         marker.draggable = true
         let label = UILabel(frame: CGRect(x: 0, y: 0, width: 30, height: 50))
         label.text = "좌측"
