@@ -27,7 +27,7 @@ import {
 } from 'react-native/Libraries/NewAppScreen';
 
 import Geolocation from '@react-native-community/geolocation';
-const SK_API_KEY = 'SKAPI'
+const SK_API_KEY = 'SK_API_Key'
 
 const TMapShow = requireNativeComponent("TMapShow")
 
@@ -60,7 +60,7 @@ export default class App extends Component {
           addressData : data2,
           isLoading: false,
         });
-        console.log(this.state.breweryList);
+        console.log(this.state.addressData);
       })
       },
       error => {
@@ -72,10 +72,12 @@ export default class App extends Component {
   render() {
     const lat = this.state.lat
     const lon = this.state.lon
+    const isLoading = this.state.isLoading
     return (
       <View style={styles.container}>
-        
-        <TMapShow 
+        {isLoading? <Text> Data is Loading </Text> :
+        <>
+          <TMapShow 
           style={ styles.wrapper }
           zoom = {10}
           clatitude = {lat}
@@ -86,12 +88,11 @@ export default class App extends Component {
           onPress={this.increment}
         >
           <Text style={styles.button}>
-            Region : to be got
-          </Text>
-          <Text style={styles.button}>
-            City : to be got
+            {this.state.addressData.addressInfo.fullAddress}
           </Text>
         </TouchableOpacity>
+        </>
+        }
       </View>
     );
   }
