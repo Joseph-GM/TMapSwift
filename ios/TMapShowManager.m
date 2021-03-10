@@ -12,4 +12,5 @@
 RCT_EXPORT_VIEW_PROPERTY(zoom, NSNumber)
 RCT_EXPORT_VIEW_PROPERTY(clatitude, NSNumber)
 RCT_EXPORT_VIEW_PROPERTY(clongitude, NSNumber)
+RCT_EXPORT_VIEW_PROPERTY(markerdata, NSArray)
 @end

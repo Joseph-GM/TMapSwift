@@ -27,7 +27,7 @@ import {
 } from 'react-native/Libraries/NewAppScreen';
 
 import Geolocation from '@react-native-community/geolocation';
-const SK_API_KEY = 'SK_API_Key'
+const SK_API_KEY = 'l7xxb0267913faf84de39d5c80d951a60836'
 
 const TMapShow = requireNativeComponent("TMapShow")
 
@@ -51,7 +51,7 @@ export default class App extends Component {
           }
         );
         Promise.all([
-          fetch(`https://apis.openapi.sk.com/tmap/pois?version=1&count=2&searchKeyword=전기차충전소&centerLon=${position.coords.longitude}&centerLat=${position.coords.latitude}&appKey=${SK_API_KEY}`),
+          fetch(`https://apis.openapi.sk.com/tmap/pois?version=1&count=10&searchKeyword=EV충전소&centerLon=${position.coords.longitude}&centerLat=${position.coords.latitude}&appKey=${SK_API_KEY}`),
           fetch(`https://apis.openapi.sk.com/tmap/geo/reversegeocoding?version=1&lat=${position.coords.latitude}&lon=${position.coords.longitude}&appKey=${SK_API_KEY}`)
          ])
         .then(([res1, res2]) => Promise.all([res1.json(), res2.json()]))
@@ -60,7 +60,6 @@ export default class App extends Component {
           addressData : data2,
           isLoading: false,
         });
-        console.log(this.state.addressData);
       })
       },
       error => {
@@ -73,6 +72,7 @@ export default class App extends Component {
     const lat = this.state.lat
     const lon = this.state.lon
     const isLoading = this.state.isLoading
+    const markers = this.state.breweryList
     return (
       <View style={styles.container}>
         {isLoading? <Text> Data is Loading </Text> :
@@ -82,6 +82,7 @@ export default class App extends Component {
           zoom = {10}
           clatitude = {lat}
           clongitude = {lon}
+          markerdata = {markers}
         />
         <TouchableOpacity
           style={[styles.border]}

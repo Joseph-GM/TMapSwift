@@ -32,10 +32,11 @@ class TMapShow: UIView, TMapViewDelegate {
 /*    var mPosition: CLLocationCoordinate2D = CLLocationCoordinate2D.init(latitude: 37.5147585, longitude:126.7044424) */
   
 //    let zoom = 16
-    let apiKey:String = "SK_API_Key"
+    let apiKey:String = "l7xxb0267913faf84de39d5c80d951a60836"
 
   @objc var clatitude: NSNumber = 36.121212
   @objc var clongitude: NSNumber = 126.1212121
+  @objc var markerdata: NSArray?
   
   var mPosition: CLLocationCoordinate2D {
     get {
@@ -64,6 +65,7 @@ class TMapShow: UIView, TMapViewDelegate {
         self.mapView?.setCenter(mPosition)
         self.mapView?.setZoom(Int(zoom))
         
+    
         
         let marker = TMapMarker(position: mPosition)
         marker.title = "현재위치"
@@ -79,7 +81,24 @@ class TMapShow: UIView, TMapViewDelegate {
         marker.map = self.mapView
         self.markers.append(marker)
         
-        
+      
+      if let poiResult = markerdata! as? [[String : AnyObject]] {
+        for poi in poiResult {
+          print(poi["name"]!)
+          print(poi["noorLat"]!)
+          let markerLatitude:Double? = Double(poi["noorLat"] as! Substring)
+          let markerLongitude:Double? = Double(poi["noorLon"] as! Substring)
+          let markerPosition: CLLocationCoordinate2D? = CLLocationCoordinate2D(latitude: markerLatitude!, longitude: markerLongitude!)
+          let marker = TMapMarker(position: markerPosition!)
+          print(markerPosition)
+          marker.map = self.mapView
+          marker.title = String(poi["name"] as! Substring)
+          self.markers.append(marker)
+          self.mapView?.fitMapBoundsWithMarkers(self.markers)
+        }
+      }
+  
+/*
        let pathData = TMapPathData()
         pathData.requestFindNameAroundPOI(mPosition, categoryName:"EV충전소", radius: 100, count: 10) { (result, error)->Void in
                     if let result = result {
@@ -94,6 +113,7 @@ class TMapShow: UIView, TMapViewDelegate {
                         }
                     }
         }
+*/
 
     }
     
