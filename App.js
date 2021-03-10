@@ -27,7 +27,7 @@ import {
 } from 'react-native/Libraries/NewAppScreen';
 
 import Geolocation from '@react-native-community/geolocation';
-const SK_API_KEY = 'l7xxb0267913faf84de39d5c80d951a60836'
+const SK_API_KEY = 'API_KEY'
 
 const TMapShow = requireNativeComponent("TMapShow")
 
